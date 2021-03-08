@@ -1,7 +1,7 @@
 
 if (!this->isDashing || !onGround) { // loc_100219b8a // probably wrong
     if (this->isRising) { // loc_100219b98
-        if (this->isRobot && rdx && !this->robotCanJump) { // loc_100219ba6
+        if (this->isRobot && this->isHolding && !this->robotCanJump) { // loc_100219ba6
 
             float dRate = this->decelRate; // xmm1, loc_100219bc5
             if (dRate== 1.5) {

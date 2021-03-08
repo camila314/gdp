@@ -96,7 +96,6 @@ int PlayerObject::updateJump(float delta) {
           
         float its_1_if_ball = 0.60;
         if (this->isBall) {
-            rcx = 0x0;
             its_1_if_ball = 1.0;
         }
 
@@ -105,11 +104,11 @@ int PlayerObject::updateJump(float delta) {
         } else {
             if (!this->isDashing || !onGround) {
                 if (this->isRising) {
-                    if (this->isRobot && rdx && !this->robotCanJump) {
+                    if (this->isRobot && this->isHolding && !this->robotCanJump) {
 
                         float dRate = this->decelRate;
                         if (dRate== 1.5) {
-                            this->decelRate = (delta * 0.1) + xmm1;
+                            this->decelRate = (delta * 0.1) + dRate;
                             double yAccel = this->yAccel;
 
                             if (!this->isUpsideDown) {
@@ -131,7 +130,6 @@ int PlayerObject::updateJump(float delta) {
                             }
                             return;
                         } else {
-                            rcx = 0x0;
                             float fall_accel = its_1_if_ball * (local_gravity * delta);
                             if (this->isUpsideDown)
                                 fall_accel *= -1.0;
@@ -157,7 +155,6 @@ int PlayerObject::updateJump(float delta) {
                             return;
                         }
                     } else {
-                        rcx = 0x0;
                         float fall_accel = its_1_if_ball * (local_gravity * delta);
                         if (this->isUpsideDown)
                             fall_accel *= -1.0;
@@ -193,8 +190,6 @@ int PlayerObject::updateJump(float delta) {
                             this->isOnGround = false;
                         }
                     }
-
-                    rcx = 0x0;
 
                     float fall_accel = its_1_if_ball * 0.958199 * delta;
                     if (this->isUpsideDown)
@@ -253,7 +248,6 @@ int PlayerObject::updateJump(float delta) {
                         this->hasHitPortal = true;
                         jumpPower = 1./32;
                 }
-                rcx = 0x0;
 
                 float sign = this->isUpsideDown ? -1. : 1.;
                 this->yAccel = size * jumpPower * sign;
@@ -277,7 +271,6 @@ int PlayerObject::updateJump(float delta) {
                 this->didJumpIDK = true;
                 struct timeb tp;
                 ftime(&tp);
-                xmm0 = (tp.millitm + tp.time*1000)/1000;
                 this->timeSinceLastJump = (tp.millitm + tp.time*1000)/1000;
                 if (this->isInPlayLayer) {
                         playLayer->incrementJumps();

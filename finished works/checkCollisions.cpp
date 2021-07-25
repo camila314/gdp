@@ -17,7 +17,7 @@ inline bool playerTouchesObject(CCRect playerRect, CCRect hitboxRect) {
 
 }
 
-float _ZN9PlayLayer15checkCollisionsEPvP12PlayerObjectf(PlayerObject* player, float delta) {
+float PlayLayer::checkCollisions(PlayerObject* player, float delta) {
     
     player->preCollision();
     float groundHeight = player->groundHeight;

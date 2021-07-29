@@ -45,7 +45,7 @@ void PlayerObject::flipGravity(bool upsideDown, bool arg2) {
                 }
             }
         }
-        m_lastHitGround = m_portalCircleLocation;
+        m_lastHitGround = m_lastPortalLocation;
         m_onGround = false;
         if (m_isBall) {
             this->stopActionByTag(0);

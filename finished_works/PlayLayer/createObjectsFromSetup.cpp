@@ -21,19 +21,19 @@ void PlayLayer::createObjectsFromSetup(std::string setupStr) {
     if (setupStr.size() > 1) {
             std::vector<std::string> objs = split(setupStr, ";");
             std::string header = objs[0];
-            this->levelSettings = LevelSettingsObject::objectFromString(header);    
+            m_levelSettings = LevelSettingsObject::objectFromString(header);    
 
-            this->levelSettings->retain();
-            this->levelSettings->gameLevel = this->gameLevel;
-            this->levelSettings->effectManager->updateColors(this->player1->pCol1, this->player1->pCol2);
-            GM->loadFont(this->levelSettings->font);
+            m_levelSettings->retain();
+            m_levelSettings->gameLevel = m_gameLevel;
+            m_levelSettings->effectManager->updateColors(m_player1->pCol1, m_player1->pCol2);
+            GM->loadFont(m_levelSettings->font);
 
-            auto userCoins = cocos2d::CCArray::create(); // r14
+            auto userCoins = cocos2d::CCArray::create();
             if (objs.size()>1) {
                     for (int i = 1; i < objs.size(); i++) {
-                        auto object = GameObject::objectFromString(objs[i], this->gameLevel->lowDetailMode);
+                        auto object = GameObject::objectFromString(objs[i], m_gameLevel->lowDetailMode);
 
-                        if (this->gameLevel->isOfficial && object->getType() == kSecretCoin)
+                        if (m_gameLevel->isOfficial && object->getType() == kSecretCoin)
                             continue
 
                         if (object) {
@@ -58,19 +58,19 @@ void PlayLayer::createObjectsFromSetup(std::string setupStr) {
     }
 
     float screenEnd = CCDirector::sharedDirector()->getScreenRight() + 300;
-    this->levelLength = this->trueLevelLength + 340;
-    if (this->levelLength <= screenEnd) {
-        this->levelLength = screenEnd;
+    m_levelLength = m_trueLevelLength + 340;
+    if (m_levelLength <= screenEnd) {
+        m_levelLength = screenEnd;
     }
-    this->endPortal = EndPortalObject::create();
-    this->endPortal->setStartPos(ccp(this->levelLength, 225.0));
-    reinterpret_cast<int>(this->endPortal->valOffset(0x3d4)) = 11;
-    this->addToSection(this->endPortal);
-    this->objects->addObject(this->endPortal);
-    this->endPortal->updateColors(this->endPortal, this->player1->pCol1);
-    this->endPortal->setVisible(false);
-    reinterpret_cast<CCArray*>(this->valOffset(0x3c8))->addObject(this->endPortal);
-    this->endPortal->calculateSpawnXPos();
-    CCArray* idk = reinterpret_cast<CCArray*>(this->valOffset(0x548));
+    m_endPortal = EndPortalObject::create();
+    m_endPortal->setStartPos(ccp(m_levelLength, 225.0));
+    __member<int>(0x3d4) = 11;
+    this->addToSection(m_endPortal);
+    m_objects->addObject(m_endPortal);
+    m_endPortal->updateColors(m_endPortal, m_player1->pCol1);
+    m_endPortal->setVisible(false);
+    __member<CCArray*>(0x3c8)->addObject(m_endPortal);
+    m_endPortal->calculateSpawnXPos();
+    CCArray* idk = __member<CCArray*>(0x548);
     qsort(idk->data, idk->count(), sizeof(CCObject*), xCompSpeed);
 }

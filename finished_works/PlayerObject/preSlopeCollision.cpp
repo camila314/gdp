@@ -18,7 +18,7 @@ bool PlayerObject::preSlopeCollision(GameObject* obj, float arg2) {
             }
         } else {
             ignoreSettingSlopeVars = false;
-            if (obj->getRealPosition(obj).x + obj->getLastPosition().x > m_playerSpeedMultiplier * m_playerSpeed * arg2) {
+            if (obj->getRealPosition(obj).x - obj->getLastPosition().x > m_playerSpeedMultiplier * m_playerSpeed * arg2) {
                 if (this->getPosition().x > objectRect->getMaxX()) {
                     var_2C = 1.0;
                     auto hitbox = cocos2d::CCRect::CCRect(objectRect + objectRect.size.width - 1.00, objectRect.origin.y + 1.0, 1.0, objectRect.size.height - 2);

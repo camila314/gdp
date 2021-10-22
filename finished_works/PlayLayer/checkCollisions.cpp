@@ -136,12 +136,9 @@ float PlayLayer::checkCollisions(PlayerObject* player, float delta) {
             }
         }
 
-        var_90 = this->dualMode;
-
         CCRect playerRect = player->getObjectRect();
 
         int section = this->sectionForPos(player->getPositionX());
-
 
         CCArray* sect;
         for (int index = section-1; index <= section; index++) {
@@ -152,7 +149,7 @@ float PlayLayer::checkCollisions(PlayerObject* player, float delta) {
                     if (sect->count() > 0) {
                         CCARRAY_FOREACH(gameObj, sect) {
                             int objectType = gameObj->objectType;
-                            if (!gameObj->unknown_27a && !gameObj->isUnloaded && (objectType <= 39 || !gameObj->hasBeenActivatedByPlayer(player))) {
+                            if (!gameObj->toggledOff && !gameObj->isUnloaded && (objectType <= 39 || !gameObj->hasBeenActivatedByPlayer(player))) {
                                 switch (objectType) {
                                     case 0:
                                     case kTouchableSurface: // case 20
@@ -241,7 +238,7 @@ float PlayLayer::checkCollisions(PlayerObject* player, float delta) {
                                                                 gameObj->activatedByPlayer(player);
                                                                 player->propellPlayer(0.8);
                                                                 this->flipFravity(player, newDirection, true);
-                                                                player->unknown_628 = true;
+                                                                player->unused_628 = true;
                                                             }
                                                             break;
                                                         case kYellowRing:
@@ -382,7 +379,7 @@ float PlayLayer::checkCollisions(PlayerObject* player, float delta) {
                                                                     this->lightningFlash(gameObj->getPosition(), destObj->getPosition(), player->glowColor, 4.0, 0.2, 100, true, 1.0);
                                                             }
                                                             float something = 60.0;
-                                                            if (gameObj->unknown_508) {
+                                                            if (gameObj->tintGround) {
                                                                     this->cameraSmoothness = 0.5;
                                                                     something = 180.0;
                                                             }
@@ -431,13 +428,9 @@ float PlayLayer::checkCollisions(PlayerObject* player, float delta) {
             }
         }
 
-        bool loopCondition = player->unknown_540 && player->unknown_554;
         GameObject* loopObject;
         CCARRAY_FOREACH(loopObject, this->touchedSurfaces) {
             if (!loopObject->getGroupDisabled()) {
-                    if (loopCondition && loopObjct->groupIDCount > 0) {
-                        loopCondition = player->testForMoving(delta, loopObject) ^ 0x1;
-                    }
                     if (playerTouchesObject(player->getObjectRect(), loopObject->getObjectRect())) {
                         player->collidedWithObject(delta, loopObject);
                     }

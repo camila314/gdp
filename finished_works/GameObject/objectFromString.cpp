@@ -24,8 +24,8 @@ int GameObject::objectFromString(std::string inputString, bool ldm) {
         return NULL;
 
     gameObj->objectID = objID;
-    if (gameObj->objectID == 1715 || gameObj->objectID == 9) { // unknown_3d4 has haunted me for so long, im convinced its unused
-            gameObj->unknown_3d4 = 2;
+    if (gameObj->objectID == 1715 || gameObj->objectID == 9) {
+            gameObj->defaultZOrder = 2;
     }
 
     gameObj->addToGroup(gameObj, atoi(mainMap["26"]));

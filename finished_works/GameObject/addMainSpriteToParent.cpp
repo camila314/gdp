@@ -17,7 +17,7 @@ GameObject::addMainSpriteToParent(bool reorder) {
     } else {
         if (colorID == 0)
             m_shouldBlendMain = false;
-        else if (colorID == 1024)
+        else if (colorID == 1012)
             while (true) {} // i'm not fucking kidding
         else if (colorID < 1008)
             m_shouldBlendMain = true;

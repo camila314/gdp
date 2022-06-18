@@ -37,7 +37,7 @@ void PlayLayer::createObjectsFromSetup(std::string setupStr) {
                             continue
 
                         if (object) {
-                            if (object->getType() == kUserCoin && userCoins->count() < 3) { 
+                            if (object->m_objectType == GameObjectType::UserCoin && userCoins->count() < 3) { 
                                 userCoins->addObject(object);
                             }
                             this->addObject(object);
@@ -64,13 +64,13 @@ void PlayLayer::createObjectsFromSetup(std::string setupStr) {
     }
     m_endPortal = EndPortalObject::create();
     m_endPortal->setStartPos(ccp(m_levelLength, 225.0));
-    __member<int>(0x3d4) = 11;
+    m_endPortal->m_defaultZOrder = 11;
     this->addToSection(m_endPortal);
+
     m_objects->addObject(m_endPortal);
     m_endPortal->updateColors(m_endPortal, m_player1->pCol1);
     m_endPortal->setVisible(false);
-    __member<CCArray*>(0x3c8)->addObject(m_endPortal);
+    m_unk248->addObject(m_endPortal);
     m_endPortal->calculateSpawnXPos();
-    CCArray* idk = __member<CCArray*>(0x548);
-    qsort(idk->data, idk->count(), sizeof(CCObject*), xCompSpeed);
+    qsort(this->unk3CC->data, this->unk3CC->count(), sizeof(CCObject*), xCompSpeed);
 }

@@ -139,9 +139,6 @@ void PlayLayer::resetLevel() {
     } else {
         auto levelSettings = m_levelSettings;
         if (m_startPos) {
-            m_startPosCheckpoint = this->createCheckpoint();
-            m_startPosCheckpoint->retain();
-
             levelSettings = m_startPos->m_levelSettings;
         } else {
             this->checkSpawnObjects();
@@ -202,6 +199,11 @@ void PlayLayer::resetLevel() {
 
     this->updateProgressbar();
     this->refreshCounterLabels();
+
+    if (m_startPos && !m_startPosCheckpoint) {
+        m_startPosCheckpoint = this->createCheckpoint();
+        m_startPosCheckpoint->retain();
+    }
 
     if (m_debugPauseOff) {
         this->startMusic();

@@ -14,8 +14,10 @@ std::vector<std::string> split(const std::string &s, char delim) {
     return elems;
 }
 
-constexpr int kUserCoin = 31;
-constexpr int kSecretCoin = 22;
+enum CoinType {
+    kSecretCoin = 22;
+    kUserCoin = 31;
+}
 
 void PlayLayer::createObjectsFromSetup(std::string setupStr) {
     if (setupStr.size() > 1) {
@@ -33,7 +35,7 @@ void PlayLayer::createObjectsFromSetup(std::string setupStr) {
                     for (int i = 1; i < objs.size(); i++) {
                         auto object = GameObject::objectFromString(objs[i], m_gameLevel->lowDetailMode);
 
-                        if (m_gameLevel->isOfficial && object->getType() == kSecretCoin)
+                        if (m_gameLevel->isOfficial && object->getType() == CoinType::kSecretCoin)
                             continue
 
                         if (object) {

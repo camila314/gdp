@@ -174,6 +174,9 @@ if data.startswith("EffectGameObject"):
 
 #314
 
+data = re.sub(r"rax = cocos2d::CCPoint::CCPoint\((\w+), ", r"\1 = cocos2d::CCPoint::CCPoint(", data)
+data = re.sub(r"cocos2d::CCArray::count\((\w+)\)", r"\1->count()", data)
+
 data = data.replace("*(int32_t *)value ","")
 data = data.replace("*(GameManager::sharedState() + 0x180)", "PL")
 data = data.replace("*(GameManager::sharedState() + 0x188)", "LEL")

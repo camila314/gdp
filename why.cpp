@@ -1,204 +1,269 @@
-EffectGameObject::customObjectSetup(int arg1) { // effectgameobject
+HardStreak::updateStroke(float dt) {
+    var_30 = *___stack_chk_guard;
+    this->clear();
 
-    *(int8_t *)(this + 0x378) = atoi(mainMap["11"]);
-    *(int8_t *)(this + 0x379) = atoi(mainMap["62"]);
-    *(int8_t *)(this + 0x594) = atoi(mainMap["87"]);
+loc_10005c292:
+    CMP(m_isSolid, 0x1);
+    var_A4 = 0x1 + CARRY(RFLAGS(cf));
+    rbx = var_38;
+    var_F8 = m_currentPoint;
+    r13 = 0x0;
+    var_100 = this;
+    goto loc_10005c2d0;
 
-    switch (m_objectID) {
-        case 901:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            var_40 = cocos2d::CCPoint::CCPoint(atoi(mainMap["28"]), atoi(mainMap["29"]));
-            cocos2d::CCPoint::operator=(this + 0x50c, var_40);
+loc_10005c2d0:
+    if (cocos2d::CCArray::count(m_pointsArr) == 0x0) goto loc_10005c8ac;
 
+loc_10005c2e4:
+    r12 = 0x0;
+    var_A8 = r13;
+    goto loc_10005c2f0;
 
-
-            var_70 = atof(mainMap["85"]);
-            if (var_70 <= 0.0) {
-                var_70 = 2.0;
-            }
-
-            *(int32_t *)(this + 0x4f0) = atof(mainMap["10"]);
-            *(int32_t *)(this + 0x514) = atoi(mainMap["30"]);
-            *(int32_t *)(this + 0x518) = var_70;
-            *(int8_t *)(this + 0x51c) = atoi(mainMap["58"]);
-            *(int8_t *)(this + 0x51d) = atoi(mainMap["59"]);
-            *(int8_t *)(this + 0x51e) = atoi(mainMap["100"]);
-            *(int32_t *)(this + 0x4fc) = atoi(mainMap["71"]);
-            *(int32_t *)(this + 0x520) = atoi(mainMap["101"]);
-            break;
-        case 1006:
-            *(int32_t *)(this + 0x4f8) = atof(mainMap["51"]);
-            *(int32_t *)(this + 0x54c) = atof(mainMap["45"]);
-            *(int32_t *)(this + 0x550) = atof(mainMap["46"]);
-            *(int32_t *)(this + 0x554) = atof(mainMap["47"]);
-            *(int32_t *)(this + 0x558) = atof(mainMap["48"]);
-            *(int8_t *)(this + 0x575) = atof(mainMap["65"]);
-            *(int8_t *)(this + 0x576) = atof(mainMap["66"]);
-            *(int32_t *)(this + 0x55c) = atof(mainMap["52"]);
-            *(int8_t *)(this + 0x577) = atof(mainMap["86"]);
-
-            if (*(int32_t *)(this + 0x558) != 0x0) {
-                *(this + 0x560) = GameToolbox::hsvFromString(mainMap["49"], "a");
-                *(int32_t *)(this + 0x570) = atof(mainMap["50"]);
-            } else {
-                *(int16_t *)(this + 0x4ed) = ccc3(atoi(mainMap["7"]), atoi(mainMap["8"]), atoi(mainMap["9"]));
-            }
-
-            *(int32_t *)(this + 0x4f8) = atof(mainMap["51"]);
-            *(int32_t *)(this + 0x4f0) = atof(mainMap["10"]);
-            *(int32_t *)(this + 0x4f4) = atof(mainMap["35"]);
-            break;
-        case 1007:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int32_t *)(this + 0x4f0) = atof(mainMap["10"]);
-            *(int32_t *)(this + 0x4f4) = atof(mainMap["35"]);
-            break;
-        case 1049:
-            *(int32_t *)(this + 0x4f8) = atof(mainMap["51"]);
-            *(int8_t *)(this + 0x578) = atoi(mainMap["56"]);
-            break;
-        case 1268:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int32_t *)(this + 0x588) = atof(mainMap["63"]);
-            *(int8_t *)(this + 0x595) = atoi(mainMap["102"]);
-            break;
-        case 1275:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int8_t *)(this + 0x59c) = atoi(mainMap["78"]);
-            *(int32_t *)(this + 0x5b4) = atoi(mainMap["79"]);
-            *(int32_t *)(this + 0x5b0) = atoi(mainMap["80"]);
-            *(int8_t *)(this + 0x578) = atoi(mainMap["56"]);
-            break;
-        case 1346:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int32_t *)(this + 0x4fc) = atoi(mainMap["71"]);
-            *(int32_t *)(this + 0x4f0) = atof(mainMap["10"]);
-            *(int32_t *)(this + 0x514) = atoi(mainMap["30"]);
-
-            xmm1 = atof(mainMap["85"]);
-            if (xmm1 <= 0.0) {
-                xmm1 = 2.0;
-            }
-            *(int32_t *)(this + 0x518) = xmm1;
-            *(int32_t *)(this + 0x524) = atoi(mainMap["68"]);
-            *(int32_t *)(this + 0x528) = atoi(mainMap["69"]);
-            *(int8_t *)(this + 0x52c) = atoi(mainMap["70"]);
-            break;
-        case 1347:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int32_t *)(this + 0x4fc) = atoi(mainMap["71"]);
-            *(int32_t *)(this + 0x4f0) = atof(mainMap["10"]);
-            *(int32_t *)(this + 0x530) = atof(mainMap["72"]);
-            *(int32_t *)(this + 0x534) = atof(mainMap["73"]);
-            *(int8_t *)(this + 0x538) = atoi(mainMap["74"]);
-            break;
-        case 1520:
-            *(int32_t *)(this + 0x4f0) = atof(mainMap["10"]);
-            *(int32_t *)(this + 0x500) = atof(mainMap["75"]);
-            *(int32_t *)(this + 0x504) = atof(mainMap["84"]);
-            break;
-        case 1585:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int32_t *)(this + 0x584) = atoi(mainMap["76"]);
-            break;
-        case 1595:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int8_t *)(this + 0x578) = atoi(mainMap["56"]);
-            *(int8_t *)(this + 0x579) = atoi(mainMap["81"]);
-            *(int32_t *)(this + 0x57c) = atoi(mainMap["82"]);
-            *(int8_t *)(this + 0x580) = atoi(mainMap["89"]);
-            break;
-        case 1611:
-            *(int32_t *)(this + 0x5b0) = atoi(mainMap["80"]);
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int32_t *)(this + 0x598) = atoi(mainMap["77"]);
-            *(int8_t *)(this + 0x578) = atoi(mainMap["56"]);
-            *(int8_t *)(this + 0x5a4) = atoi(mainMap["104"]);
-            break;
-        case 1616:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            break;
-        case 1587:
-        case 1589:
-        case 1598:
-        case 1614:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int8_t *)(this + 0x59c) = atoi(mainMap["78"]);
-            *(int32_t *)(this + 0x5b4) = atoi(mainMap["79"]);
-            *(int32_t *)(this + 0x5b0) = atoi(mainMap["80"]);
-            *(int8_t *)(this + 0x578) = atoi(mainMap["56"]);
-            break;
-        case 1811:
-            *(int32_t *)(this + 0x5b0) = atoi(mainMap["80"]);
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int32_t *)(this + 0x598) = atoi(mainMap["77"]);
-            *(int32_t *)(this + 0x5a0) = atoi(mainMap["88"]);
-            *(int8_t *)(this + 0x578) = atoi(mainMap["56"]);
-            break;
-        case 1812:
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int8_t *)(this + 0x578) = atoi(mainMap["56"]);
-            break;
-        case 1814:
-            *(int32_t *)(this + 0x53c) = atof(mainMap["90"]);
-            *(int32_t *)(this + 0x540) = atof(mainMap["91"]);
-            *(int32_t *)(this + 0x544) = atoi(mainMap["92"]);
-            *(int32_t *)(this + 0x548) = atof(mainMap["105"]);
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int32_t *)(this + 0x4f0) = atof(mainMap["10"]);
-            break;
-        case 1815:
-            *(int32_t *)(this + 0x5b0) = atoi(mainMap["80"]);
-            *(int32_t *)(this + 0x5a8) = atoi(mainMap["95"]);
-            *(int32_t *)(this + 0x4f8) = atoi(mainMap["51"]);
-            *(int32_t *)(this + 0x4f0) = atof(mainMap["10"]);
-            *(int8_t *)(this + 0x5a5) = atoi(mainMap["93"]);
-            *(int8_t *)(this + 0x578) = atoi(mainMap["56"]);
-            break;
-        case 1816:
-            *(int32_t *)(this + 0x5b0) = atoi(mainMap["80"]);
-            *(int8_t *)(this + 0x5ac) = atoi(mainMap["94"]);
-            break;
-        case 1817:
-            *(int32_t *)(this + 0x5b0) = atoi(mainMap["80"]);
-            *(int32_t *)(this + 0x598) = atoi(mainMap["77"]);
-            break;
-
-        default:
-            break;
+loc_10005c2f0:
+    var_98 = r12;
+    rax = cocos2d::CCArray::objectAtIndex(m_pointsArr, var_98);
+    rax = cocos2d::CCPoint::CCPoint(var_60, rax + 0x24);
+    rcx = var_98;
+    if (rcx < cocos2d::CCArray::count(m_pointsArr) - 0x1) {
+            rsi = cocos2d::CCArray::objectAtIndex(m_pointsArr, rcx + 0x1) + 0x24;
+            rdi = var_58;
     }
-
-    if (m_objectID == 105 || m_objectID < 31 || (743 < m_objectID && m_objectID < 901) || m_objectID == 915) {
-        *(int16_t *)(this + 0x4ed) = ccc3(atoi(mainMap["7"]), atoi(mainMap["8"]), atoi(mainMap["9"]));
-        *(int32_t *)(this + 0x4f0) = atof(mainMap["10"]);
-
-        *(int8_t *)(this + 0x508) = atof(mainMap["14"]);
-        *(int8_t *)(this + 0x509) = atof(mainMap["15"]);
-        *(int8_t *)(this + 0x50a) = atof(mainMap["16"]);
-        *(int8_t *)(this + 0x50b) = atof(mainMap["17"]);
-        *(int8_t *)(this + 0x574) = atof(mainMap["60"]);
-
-        rbx = atoi(mainMap["23"]);
-        if (rbx > 1) {
-            *(int32_t *)(this + 0x3bc) = rbx;
-        }
-
-        *(int32_t *)(this + 0x4f4) = atoi(mainMap["36"]) ? atof(mainMap["35"]) : 1.0;
-
-        *(this + 0x560) = GameToolbox::hsvFromString(mainMap["49"], "a");
-        *(int32_t *)(this + 0x570) = atof(mainMap["50"]);
-
-        if (m_objectID < 31 || m_objectID == 105 || m_objectID == 900) {
-            *(int8_t *)(this + 0x50b) = 0x0;
-            *(int32_t *)(this + 0x4f4) = 1.0;
-        }
+    else {
+            rdi = var_58;
+            rsi = var_F8;
     }
-
-    xmm0 = intrinsic_xorpd(xmm0, xmm0);
-    xmm0 = intrinsic_ucomiss(xmm0, *(int32_t *)(this + 0x518));
-    if (xmm0 >= 0x0) {
-            *(int32_t *)(this + 0x518) = 0x40000000;
+    rax = cocos2d::CCPoint::CCPoint(rdi, rsi);
+    rax = cocos2d::CCPoint::CCPoint(var_50);
+    rax = cocos2d::CCPoint::CCPoint(var_48);
+    rax = cocos2d::CCPoint::CCPoint(var_40);
+    rax = cocos2d::CCPoint::CCPoint(rbx);
+    xmm0 = intrinsic_movss(xmm0, m_waveSize);
+    if (r13 != 0x0) {
+            xmm0 = intrinsic_addss(xmm0, xmm0);
     }
+    else {
+            xmm0 = intrinsic_mulss(xmm0, *(int32_t *)0x10050ca58);
+    }
+    xmm0 = intrinsic_mulss(xmm0, m_pulseSize);
+    var_90 = intrinsic_movss(var_90, xmm0);
+    r15 = var_60;
+    rax = cocos2d::CCPoint::CCPoint(var_C8, r15);
+    rax = cocos2d::CCPoint::CCPoint(var_C0, var_58);
+    xmm0 = intrinsic_movss(xmm0, *(int32_t *)value 1.0);
+    xmm1 = intrinsic_movss(xmm1, var_90);
+    xmm0 = intrinsic_ucomiss(xmm0, xmm1);
+    xmm2 = intrinsic_movaps(xmm2, xmm1);
+    if (xmm0 > 0x0) {
+            rax = cocos2d::CCPoint::CCPoint(var_78, 0x10069c540);
+            xmm1 = intrinsic_movss(xmm1, var_90);
+            xmm1 = intrinsic_mulss(xmm1, *(int32_t *)value 0.5);
+    }
+    else {
+            xmm1 = intrinsic_movss(xmm1, var_C0);
+            xmm0 = intrinsic_movss(xmm0, var_BC);
+            xmm1 = intrinsic_subss(xmm1, var_C8);
+            xmm0 = intrinsic_subss(xmm0, var_C4);
+            xmm2 = intrinsic_mulss(xmm2, *(int32_t *)value 0.5);
+            var_90 = intrinsic_movss(var_90, xmm2);
+            xmm0 = intrinsic_cvtss2sd(xmm0, xmm0);
+            xmm1 = intrinsic_cvtss2sd(xmm1, xmm1);
+            rax = atan2(xmm0, xmm1);
+            xmm1 = intrinsic_movapd(xmm1, xmm0);
+            xmm1 = intrinsic_mulsd(xmm1, *0x10050d2f8);
+            xmm1 = intrinsic_divsd(xmm1, *0x10050d300);
+            xmm1 = intrinsic_addsd(xmm1, *0x10050d308);
+            xmm1 = intrinsic_ucomisd(xmm1, *0x10050d310);
+            if (xmm1 > 0x0) {
+                    xmm1 = intrinsic_addsd(xmm1, *0x10050d318);
+            }
+            else {
+                    xmm0 = intrinsic_xorpd(xmm0, xmm0);
+                    xmm0 = intrinsic_ucomisd(xmm0, xmm1);
+                    if (xmm0 > 0x0) {
+                            xmm1 = intrinsic_addsd(xmm1, *0x10050d310);
+                    }
+            }
+            xmm1 = intrinsic_mulsd(xmm1, *0x10050d300);
+            xmm1 = intrinsic_divsd(xmm1, *0x10050d2f8);
+            var_F0 = intrinsic_movsd(var_F0, xmm1);
+            xmm0 = intrinsic_movapd(xmm0, xmm1);
+            rax = sin(xmm0);
+            xmm1 = intrinsic_movapd(xmm1, xmm0);
+            xmm0 = intrinsic_movss(xmm0, var_90);
+            xmm0 = intrinsic_cvtss2sd(xmm0, xmm0);
+            var_E0 = intrinsic_movsd(var_E0, xmm0);
+            xmm1 = intrinsic_mulsd(xmm1, xmm0);
+            var_A0 = intrinsic_movsd(var_A0, xmm1);
+            xmm0 = intrinsic_movsd(xmm0, var_F0);
+            rax = cos(xmm0);
+            xmm0 = intrinsic_mulsd(xmm0, var_E0);
+            xmm0 = intrinsic_cvtsd2ss(xmm0, xmm0);
+            xmm1 = intrinsic_movsd(xmm1, var_A0);
+            xmm1 = intrinsic_cvtsd2ss(xmm1, xmm1);
+            rax = cocos2d::CCPoint::CCPoint(var_78, xmm0, xmm1);
+            xmm1 = intrinsic_movss(xmm1, var_90);
+    }
+    xmm2 = intrinsic_movss(xmm2, var_78);
+    var_90 = intrinsic_movaps(var_90, xmm2);
+    xmm0 = intrinsic_movaps(xmm0, *(int128_t *)0x10050cb40);
+    xmm2 = intrinsic_andps(xmm2, xmm0);
+    var_F0 = intrinsic_movaps(var_F0, xmm2);
+    xmm0 = intrinsic_movaps(xmm0, xmm2);
+    xmm0 = intrinsic_divss(xmm0, xmm1);
+    rax = asinf(xmm0);
+    rax = tanf(xmm0);
+    var_E0 = intrinsic_movaps(var_E0, xmm0);
+    xmm1 = intrinsic_movaps(xmm1, var_90);
+    xmm1 = intrinsic_mulss(xmm1, xmm0);
+    xmm1 = intrinsic_andps(xmm1, *(int128_t *)0x10050cb40);
+    var_90 = intrinsic_movaps(var_90, xmm1);
+    rbx = (var_98 >= cocos2d::CCArray::count(m_pointsArr) - 0x1 ? 0x1 : 0x0) & (r13 == 0x0 ? 0x1 : 0x0);
+    if (rbx == 0x1) {
+            rax = cocos2d::ccpDistance(r15, var_58);
+            xmm0 = intrinsic_andps(xmm0, *(int128_t *)0x10050cb40);
+            xmm0 = intrinsic_ucomiss(xmm0, *(int32_t *)value 10.0);
+            if (xmm0 > 0x0) {
+                    xmm3 = intrinsic_movaps(xmm3, var_E0);
+                    xmm3 = intrinsic_mulss(xmm3, *(int32_t *)value 4.0);
+                    xmm0 = intrinsic_movaps(xmm0, xmm3);
+                    xmm0 = intrinsic_andps(xmm0, *(int128_t *)0x10050cb40);
+                    xmm1 = intrinsic_movss(xmm1, var_58);
+                    xmm1 = intrinsic_addss(xmm1, *(int32_t *)value -4.0);
+                    var_58 = intrinsic_movss(var_58, xmm1);
+                    xmm1 = intrinsic_movss(xmm1, var_5C);
+                    xmm2 = intrinsic_movss(xmm2, var_54);
+                    xmm3 = intrinsic_orps(xmm3, *(int128_t *)value -0.00);
+                    asm{ cmpltss    xmm1, xmm2 };
+                    xmm3 = intrinsic_andps(xmm3, xmm1);
+                    xmm1 = intrinsic_andnps(xmm1, xmm0);
+                    xmm1 = intrinsic_orps(xmm1, xmm3);
+                    xmm1 = intrinsic_addss(xmm1, xmm2);
+                    var_54 = intrinsic_movss(var_54, xmm1);
+            }
+    }
+    r14 = var_70;
+    rax = cocos2d::CCPoint::CCPoint(r14, r15);
+    rax = cocos2d::CCPoint::CCPoint(var_68, var_58);
+    xmm0 = intrinsic_movss(xmm0, var_70);
+    xmm1 = intrinsic_movaps(xmm1, var_F0);
+    xmm0 = intrinsic_subss(xmm0, xmm1);
+    var_70 = intrinsic_movss(var_70, xmm0);
+    xmm0 = intrinsic_movss(xmm0, var_68);
+    xmm0 = intrinsic_addss(xmm0, xmm1);
+    var_68 = intrinsic_movss(var_68, xmm0);
+    if (r13 != 0x0) {
+            xmm0 = intrinsic_movss(xmm0, var_60);
+            xmm0 = intrinsic_addss(xmm0, xmm1);
+            var_60 = intrinsic_movss(var_60, xmm0);
+            xmm0 = intrinsic_movss(xmm0, var_58);
+            xmm0 = intrinsic_subss(xmm0, xmm1);
+            var_58 = intrinsic_movss(var_58, xmm0);
+    }
+    xmm0 = intrinsic_movss(xmm0, var_6C);
+    xmm1 = intrinsic_movss(xmm1, var_64);
+    xmm1 = intrinsic_ucomiss(xmm1, xmm0);
+    xmm3 = intrinsic_movaps(xmm3, var_90);
+    var_A0 = rbx;
+    if (xmm1 <= 0x0) goto loc_10005c6c0;
 
-    return m_objectID;
+loc_10005c67c:
+    xmm2 = intrinsic_movaps(xmm2, xmm0);
+    xmm2 = intrinsic_subss(xmm2, xmm3);
+    var_6C = intrinsic_movss(var_6C, xmm2);
+    xmm2 = intrinsic_movaps(xmm2, xmm3);
+    xmm2 = intrinsic_addss(xmm2, xmm1);
+    var_64 = intrinsic_movss(var_64, xmm2);
+    if (r13 == 0x0) goto loc_10005c6f9;
+
+loc_10005c699:
+    xmm2 = intrinsic_movss(xmm2, var_5C);
+    xmm2 = intrinsic_addss(xmm2, xmm3);
+    var_5C = intrinsic_movss(var_5C, xmm2);
+    xmm2 = intrinsic_movss(xmm2, var_54);
+    xmm2 = intrinsic_subss(xmm2, xmm3);
+    goto loc_10005c6f4;
+
+loc_10005c6f4:
+    var_54 = intrinsic_movss(var_54, xmm2);
+    goto loc_10005c6f9;
+
+loc_10005c6f9:
+    xmm1 = intrinsic_ucomiss(xmm1, xmm0);
+    rsi = r15;
+    asm{ cmova      rsi, r14 };
+    asm{ cmova      r14, r15 };
+    rbx = var_58;
+    r15 = rbx;
+    r13 = var_68;
+    asm{ cmova      r15, r13 };
+    asm{ cmova      r13, rbx };
+    rax = cocos2d::CCPoint::operator-(var_B8, rsi, var_78);
+    r12 = var_B8;
+    rax = cocos2d::CCPoint::operator=(var_50, r12);
+    rax = cocos2d::CCPoint::operator+(r12, r14, var_78);
+    rax = cocos2d::CCPoint::operator=(var_48, r12);
+    if (var_A0 != 0x0) {
+            r15 = rbx;
+    }
+    if (CPU_FLAGS & NE) {
+            r13 = rbx;
+    }
+    rax = cocos2d::CCPoint::operator+(r12, r15, var_78);
+    rax = cocos2d::CCPoint::operator=(var_40, r12);
+    rax = cocos2d::CCPoint::operator-(r12, r13, var_78);
+    rbx = var_38;
+    rax = cocos2d::CCPoint::operator=(rbx, r12);
+    r13 = var_A8;
+    rax = 0x10050d340;
+    if (r13 == 0x0) {
+            rax = *this;
+            rax = (*(rax + 0x388))(this);
+    }
+    rcx = *(int16_t *)rax & 0xffff;
+    rax = *(int8_t *)(rax + 0x2) & 0xff;
+    xmm0 = intrinsic_cvtsi2ss(xmm0, (rax << 0x10 | rcx) & 0xff);
+    xmm2 = intrinsic_movaps(xmm2, intrinsic_movss(xmm1, *(int32_t *)value 255.00));
+    xmm0 = intrinsic_divss(xmm0, xmm2);
+    xmm0 = intrinsic_unpcklps(xmm0, intrinsic_divss(intrinsic_cvtsi2ss(0x0, (rax << 0x10 | rcx) & 0xff), xmm2));
+    xmm1 = intrinsic_cvtsi2ss(0x0, (rax << 0x10 | rcx) >> 0x10);
+    xmm1 = intrinsic_divss(xmm1, xmm2);
+    xmm2 = intrinsic_movss(xmm2, *(int32_t *)value 1.0);
+    xmm1 = intrinsic_unpcklps(xmm1, xmm2);
+    var_B8 = intrinsic_movlps(var_B8, xmm0);
+    var_B0 = intrinsic_movlps(var_B0, xmm1);
+    xmm0 = intrinsic_cvtsi2ss(0x0, this->getOpacity() & 0xff);
+    xmm0 = intrinsic_divss(xmm0, *(int32_t *)value 255.00);
+    if (r13 != 0x0) {
+            xmm0 = intrinsic_mulss(xmm0, *(int32_t *)0x10050ce14);
+    }
+    var_AC = intrinsic_movss(var_AC, 0x0);
+    var_110 = intrinsic_movaps(var_110, 0x0);
+    xmm0 = 0x0;
+    rax = cocos2d::CCDrawNode::drawPolygon(this, var_50, 0x4, var_B8, var_110);
+    r12 = var_98 + 0x1;
+    if (r12 < cocos2d::CCArray::count(m_pointsArr)) goto loc_10005c2f0;
+
+loc_10005c8ac:
+    r13 = r13 + 0x1;
+    if (r13 < var_A4) goto loc_10005c2d0;
+
+loc_10005c8bc:
+    return rax;
+
+loc_10005c6c0:
+    xmm2 = intrinsic_movaps(xmm2, xmm3);
+    xmm2 = intrinsic_addss(xmm2, xmm0);
+    var_6C = intrinsic_movss(var_6C, xmm2);
+    xmm2 = intrinsic_movaps(xmm2, xmm1);
+    xmm2 = intrinsic_subss(xmm2, xmm3);
+    var_64 = intrinsic_movss(var_64, xmm2);
+    if (r13 == 0x0) goto loc_10005c6f9;
+
+loc_10005c6dd:
+    xmm2 = intrinsic_movss(xmm2, var_5C);
+    xmm2 = intrinsic_subss(xmm2, xmm3);
+    var_5C = intrinsic_movss(var_5C, xmm2);
+    xmm2 = intrinsic_movss(xmm2, var_54);
+    xmm2 = intrinsic_addss(xmm2, xmm3);
+    goto loc_10005c6f4;
 }

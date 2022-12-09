@@ -24,7 +24,7 @@ if data.startswith("PlayerObject"):
 	data = data.replace("*(int8_t *)(this + 0x7a0)", "m_isSliding")
 	data = data.replace("*(int8_t *)(this + 0x7a1)", "m_isRising")
 	data = data.replace("*(int32_t *)(this + 0x77c)", "m_vehicleSize")
-	data = data.replace("*(int32_t *)(this + 0x780)", "m_playerSpeedMultiplier")
+	data = data.replace("*(int32_t *)(this + 0x780)", "m_playerSpeed")
 	data = data.replace("*(int32_t *)(this + 0x584)", "m_collidedUUID")
 	data = data.replace("*(this + 0x608)", "m_playerSpeed")
 	data = data.replace("*(this + 0x760)", "m_yAccel")

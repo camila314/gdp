@@ -1,33 +1,33 @@
 void PlayerObject::checkSnapJumpToObject(GameObject* obj) {
     if (obj) {
-        if (m_snappedObject && m_snappedObject->m_uuid != obj->m_uuid && m_snappedObject->getType() == GameObjectType::Solid) {
+        if (m_snappedObject && m_snappedObject->m_uniqueID != obj->m_uniqueID && m_snappedObject->getType() == GameObjectType::Solid) {
 
             CCPoint oldSnapPos = m_snappedObject->getPosition();
             CCPoint newSnapPos = obj->getPosition();
 
-            float silly0 = 1.0;
+            float unknownUse = 1.0;
             float upTwoGap = 90.0;
             float downOneGap = 150.0;
             float upOneGap = 90.0;
             float xShift = 1.0;
 
-            if (m_playerSpeedMultiplier == 0.9) {
+            if (m_playerSpeed == 0.9) {
                 if (m_vehicleSize == 1.0) {
                     upOneGap = 120.0;
                 }
-            } else if (m_playerSpeedMultiplier == 0.7) {
+            } else if (m_playerSpeed == 0.7) {
                 upTwoGap = 60.0;
                 downOneGap = 120.0;
-            } else if (m_playerSpeedMultiplier == 1.1) {
-                silly0 = 0.0;
+            } else if (m_playerSpeed == 1.1) {
+                unknownUse = 0.0;
                 xShift = 2.00;
                 upTwoGap = 120.0;
                 downOneGap = 195.0;
                 if (m_vehicleSize == 1.0) {
                     upOneGap = 150.0;
                 }
-            } else if (m_playerSpeedMultiplier == 1.3) {
-                silly0 = 0.0;
+            } else if (m_playerSpeed == 1.3) {
+                unknownUse = 0.0;
                 xShift = 2.00;
                 upTwoGap = 135.0;
                 downOneGap = 225.0;
@@ -41,9 +41,9 @@ void PlayerObject::checkSnapJumpToObject(GameObject* obj) {
             upOneGap += oldSnapPos.x;
             downOneGap += oldSnapPos.x;
 
-            float someMultiplier = (m_upsideDown ? 30.0 : -30.0);
+            float someMultiplier = (m_isUpsideDown ? 30.0 : -30.0);
 
-            if (silly0 >= upOneGap)
+            if (unknownUse >= upOneGap)
                 oldSnapPos.y = fabs(newSnapPos.x - upOneGap) + someMultiplier;
 
             float value1 = fabs(newSnapPos.y - (oldSnapPos.y + someMultiplier));
@@ -53,9 +53,9 @@ void PlayerObject::checkSnapJumpToObject(GameObject* obj) {
             float value5 = fabs(newSnapPos.y - oldSnapPos.y);
 
             if (
-                (silly0 >= upOneGap && silly0 >= value5) ||
-                (silly0 >= value3 && silly0 >= value1) ||
-                (silly0 >= value4 && silly0 >= value2)
+                (unknownUse >= upOneGap && unknownUse >= value5) ||
+                (unknownUse >= value3 && unknownUse >= value1) ||
+                (unknownUse >= value4 && unknownUse >= value2)
             ) {
                 float newPos = obj->getPositionX() + this->m_snapDifference;
                 float oldPos = this->getPositionX();

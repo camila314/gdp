@@ -1,4 +1,4 @@
-PlayerObject::resetObject() {
+void PlayerObject::resetObject() {
     m_unk539 = true;
     m_collidedSlope = nullptr;
     m_unknown_730 = false;

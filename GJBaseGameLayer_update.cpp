@@ -80,7 +80,7 @@ void GJBaseGameLayer::update(float delta) {
                 m_cameraVelocity.x = ws.width * 0.5 + -75.0 + 15.0;
             }
             m_levelReset = false;
-            vector_dot_prod(&this->m_unk345c, &this->m_unk342c, 0.1); // 0x10020396c
+            unknown_matmul(&this->m_unk345c, &this->m_unk342c, 0.1); // 0x10020396c
 
             bool hasDeltaRemainder = false;
 

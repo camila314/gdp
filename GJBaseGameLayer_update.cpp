@@ -29,6 +29,7 @@
 // m_audioEffectTimer: 0x33ec
 // m_queuedTimeMod: 0x480
 // m_timeMod: 0x484
+// m_editorClicked: 0x2f10
 
 /// PlayerObject
 // m_rotation: 0x137
@@ -75,7 +76,7 @@ void GJBaseGameLayer::update(float delta) {
                 m_player2->setPosition(m_player2->m_position);
             }
             int stepCount = fmax(1.0, (delta * 240.0) / fmin(m_timewarp, 1));
-            m_unused2f10 = false;
+            m_editorClicked = false;
             if (!m_fixedStartCam && m_levelReset) {
                 m_cameraVelocity.x = ws.width * 0.5 + -75.0 + 15.0;
             }

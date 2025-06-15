@@ -1,5 +1,4 @@
-// local variable allocation has failed, the output may be wrong!
-void PlayerObject::collidedWithSlopeInternal(PlayerObject *this, float dt, GameObject *object, bool forced) {
+void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool forced) {
     if (!forced && this->preSlopeCollision(dt, object))
         return;
 

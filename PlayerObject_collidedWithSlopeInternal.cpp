@@ -1,4 +1,4 @@
-void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool forced) {
+void PlayerObject::collidedWithSlopeInternal(float dt, GameObject* object, bool forced) {
     if (!forced && this->preSlopeCollision(dt, object))
         return;
 
@@ -24,7 +24,6 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool 
 
     float slopeYVelocity = (objRect.size.height * m_playerSpeed * m_speedMultiplier) / objRect.size.width;
 
-    // unsure, used as an additive to newPlayerY and pastSlope
     float float_g = playerUphill ? (m_wasOnSlope ? 4.0 : 1.0) : 0.0;
 
     bool slopeTopRelated = playerUphill && m_isCurrentSlopeTop == slopeFloorTop && m_isUpsideDown == slopeFloorTop;
@@ -37,9 +36,13 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool 
         float_g += std::min(fabs(slopeMoveSpeed.y), dt * (m_isPlatformer ? 10 : 5));
     }
 
+    // when the player is on the slope, its radius measured from bottom to top is different.
+    // e.g for angle 0º it's 15 and for angle 45º it's 15 * sqrt(2)
+    float playerRadOnSlope = playerRadius / cosf(object->getSlopeAngle());
+    float playerRadOnPrevSlope = playerRadius / cosf(m_slopeRotation);
+
     // the Y value that represents how high above the slope you can be while still "being on the slope"
-    float pastSlope = playerRadius / cosf(m_slopeRotation);
-    float onSlopeThreshold = this->getPositionY() - upsideMod * (pastSlope + float_g);
+    float onSlopeThreshold = this->getPositionY() - upsideMod * (playerRadOnPrevSlope + float_g);
 
     if (m_wasOnSlope) {
         if (m_isUpsideDown && onSlopeThreshold < objRect.origin.y) {
@@ -59,13 +62,12 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool 
     cocos2d::CCPoint playerPos = this->getPosition();
     float minY = objRect.getMinY();
     float maxY = objRect.getMaxY();
-    float float_c = playerRadius / cosf(object->getSlopeAngle());
 
     bool isNewSlope = m_wasOnSlope && m_collidingWithSlopeId != object->m_uniqueID && m_isCurrentSlopeTop != slopeFloorTop;
     float newSlopeScalar = (isNewSlope && !m_isPlatformer) ? m_vehicleSize * 20 : 0;
 
     float slopeYPos = object->slopeYPos(playerPos.x);
-    float newPlayerY = slopeYPos + (float_c - newSlopeScalar) * (slopeFloorTop ? -1 : 1);
+    float newPlayerY = slopeYPos + (playerRadOnSlope - newSlopeScalar) * (slopeFloorTop ? -1 : 1);
     bool bool_e, bool_f;
 
     if (slopeFloorTop) {
@@ -84,7 +86,7 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool 
         bool_e = (newPlayerY == minY);
     }
 
-    bool bool_q, bool_i;
+    bool collidedSlope, bool_i;
     bool slopeUpsideDown = m_isUpsideDown != slopeFloorTop;
 
     bool bool_b = !slopeUpsideDown && m_jumpBuffered && this->isFlying() && (!playerUphill || m_isPlatformer);
@@ -95,17 +97,17 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool 
             float_p = m_wasOnSlope ? 2.0 : 1.0;
         }
 
-        bool_q = !m_isOnSlope 
+        collidedSlope = !m_isOnSlope 
                    && !isNewSlope 
                    && (!this->isFlying() || m_isPlatformer || !playerUphill)
                    && upsideMod * playerPos.y > upsideMod * (newPlayerY - float_p);
         if (upsideMod * playerPos.y > upsideMod * newPlayerY) {
-            bool_q = true;
+            collidedSlope = true;
         }
 
         bool_i = (this->isFlying() || m_isBall) && !m_jumpBuffered && playerUphill && m_wasOnSlope && !m_isPlatformer;
 
-        if (bool_q && !this->isFlying() && !m_isBall && !m_isPlatformer && m_stateHitHead == 0) {
+        if (collidedSlope && !this->isFlying() && !m_isBall && !m_isPlatformer && m_stateHitHead == 0) {
             bool notSafe = !this->isSafeMode(0.1) && !this->isSafeFlip(0.1);
             if (!notSafe || (upsideMod * playerPos.y - 2) <= upsideMod * newPlayerY) {
                 if (notSafe) {
@@ -131,18 +133,18 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool 
     } else {
         bool bool_h = playerUphill ? (!isNewSlope && !m_isOnSlope && (!m_maybeIsBoosted || this->isFlying()) && (!m_isShip || m_jumpBuffered)) : (forced || slopeMoveDown);
         
-        bool_q = true;
+        collidedSlope = true;
         if (upsideMod * playerPos.y >= upsideMod * newPlayerY) {
-            bool_q = false;
+            collidedSlope = false;
             if (bool_h && upsideMod * playerPos.y < upsideMod * (newPlayerY + float_g)) {
-                bool_q = m_isBird ? upsideMod * this->m_yVelocity <= upsideMod * 0.0 : true;
+                collidedSlope = m_isBird ? upsideMod * this->m_yVelocity <= upsideMod * 0.0 : true;
             }
         }
 
-        bool_i = m_jumpBuffered && this->isFlying() && !playerUphill && isNewSlope && !m_isPlatformer;
+        bool_i = bool_b && isNewSlope && !m_isPlatformer;
     }
 
-    if (bool_q && !m_ignoreDamage && (object->m_slopeIsHazard || (!m_isPlatformer && m_stateHitHead <= 0 && (isNewSlope || (m_isDart && m_stateDartSlide <= 0))))) {
+    if (collidedSlope && !m_ignoreDamage && (object->m_slopeIsHazard || (!m_isPlatformer && m_stateHitHead <= 0 && (isNewSlope || (m_isDart && m_stateDartSlide <= 0))))) {
         if (this->m_maybeCanRunIntoBlocks) {
             this->m_maybeIsColliding = 1;
         } else {
@@ -151,15 +153,13 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool 
         return;
     }
 
-    // have no idea how its related to rotated objects i didnt think they could be rotated
-    float blackOrbRelated = newPlayerY;
+    float float_d = newPlayerY;
     if (m_isSideways && m_rotateObjectsRelated.count(object->m_uniqueID)) {
-        blackOrbRelated -= m_rotateObjectsRelated[object->m_uniqueID].m_y;
+        float_d -= m_rotateObjectsRelated[object->m_uniqueID].m_y;
     }
 
-    // not sure yet, but does return sometimes
     if (m_wasOnSlope) {
-        if (m_unk3d0 == newPlayerY || m_isSideways && m_blackOrbRelated == blackOrbRelated) {
+        if (m_unk3d0 == newPlayerY || m_isSideways && m_blackOrbRelated == float_d) {
             if (!m_isPlatformer || fabs(m_platformerXVelocity) >= 0.1)
                 return;
         }
@@ -184,8 +184,8 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool 
             return;
     }
 
-    // if dart moving same with slope or bool_q no need to do collision work
-    if (!bool_q || (playerUphill && m_isDart && m_jumpBuffered && m_isUpsideDown == slopeFloorTop)) {
+    // no collision? no problemo
+    if (!collidedSlope || (playerUphill && m_isDart && m_jumpBuffered && m_isUpsideDown == slopeFloorTop)) {
         return;
     }
 
@@ -200,8 +200,8 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool 
     m_isCurrentSlopeTop = slopeFloorTop;
     m_collidingWithSlopeId = object->m_uniqueID;
     m_slopeFlipGravityRelated = playerUphill;
-    m_blackOrbRelated = blackOrbRelated;
-    this->unk_584 = float_c - playerRadius;
+    m_blackOrbRelated = float_d;
+    this->unk_584 = playerRadOnSlope - playerRadius;
 
     // set new slope rotation
     int someMod = flipMod * (!playerUphill ? -1 : 1) * (slopeOutpaces ? -1 : 1) * (goingLeft ? -1 : 1) * (m_isSideways ? -1 : 1);
@@ -270,10 +270,9 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject *object, bool 
         m_jumpBuffered = false;
 
     if (this->isFlying() || m_isBall) {
-        // ship, ufo, ball, swing, dart get less slope exit velocity
         m_slopeVelocity *= 0.75;
 
-        if (m_isBall && oldRoation != m_slopeRotation) {
+        if (m_isBall && oldRotation != m_slopeRotation) {
             // run ball rotation
             float ballRot = 1.0 / cosf(m_slopeRotation);
             if (ballRot > 2.0)

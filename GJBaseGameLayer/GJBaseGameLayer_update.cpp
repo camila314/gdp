@@ -35,7 +35,7 @@
 // m_rotation: 0x137
 // m_didReset: 0x9da
 // m_position: 0xa28
-// m_position2: 0x9a8
+// m_shipRotation: 0x9a8
 // m_totalTime: 0xa38
 // m_yVelocity: 0xa4c
 // m_prevRotation: 0x9b8
@@ -174,9 +174,9 @@ void GJBaseGameLayer::update(float delta) {
                             m_player2->updateRotation(physicsDelta * 60);
 
                         // why is there another one? IDK
-                        m_player1->m_position2 = m_player1->getPosition();
+                        m_player1->m_shipRotation = m_player1->getPosition();
                         if (m_isTwoPlayer)
-                            m_player2->m_position2 = m_player2->getPosition();
+                            m_player2->m_shipRotation = m_player2->getPosition();
 
 
                         this->updateSavePositionObjects();

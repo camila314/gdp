@@ -62,5 +62,5 @@ void PlayerObject::updateShipRotation(PlayerObject *this, float dt) {
         interp *= 0.25;
     }
 
-    this->setRotation(Slerp2D(fromAngle, toAngle, std::min(dt * interp, dt)) * 57.296); // 180/pi
+    this->setRotation(Slerp2D(fromAngle, toAngle, std::min(dt * interp, dt)) * 57.29578); // 180/pi
 }

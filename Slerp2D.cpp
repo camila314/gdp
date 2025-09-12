@@ -1,24 +1,34 @@
-#include <complex>
-float Slerp2D(float fromAngle, float toAngle, float t) {
-    std::complex<float> fromVec = std::polar(1.0f, fromAngle * 0.5f);
-    std::complex<float> toVec = std::polar(1.0f, toAngle * 0.5f);
+float Slerp2D(float startAngle, float endAngle, float t) {
+    float halfStart = startAngle * 0.5f;
+    float halfEnd   = endAngle * 0.5f;
 
+    float cosStart = cosf(halfStart);
+    float sinStart = sinf(halfStart);
+    float cosEnd   = cosf(halfEnd);
+    float sinEnd   = sinf(halfEnd);
 
-    float dot = std::real(fromVec) * std::real(toVec) + std::imag(fromVec) * std::imag(toVec);
-    if (dot < 0.0f) {
-        dot *= -1;
-        toVec *=  -1;
+    float dot = (cosStart * cosEnd) + (sinStart * sinEnd);
+
+    float weightStart, weightEnd;
+    if (dot < 0.f) {
+        dot = -dot;
+        sinEnd = -sinEnd;
+        cosEnd = -cosEnd;
     }
 
-    std::complex<float> weight = std::complex(1.0f - t, t);
-    if (dot < 0.9999) {
-        float between = std::acos(dot);
-
-        weight *= between;
-        weight = std::complex(std::sin(weight.real()), std::sin(weight.imag()));
-        weight /= std::sin(between);
+    if (1.f - dot > 0.0001f) {
+        float theta = acosf(dot);
+        float sinTheta = sinf(theta);
+        weightStart = sinf(theta * (1.f - t)) / sinTheta;
+        weightEnd   = sinf(theta * t) / sinTheta;
+    } else {
+        weightStart = 1.f - t;
+        weightEnd   = t;
     }
 
-    std::complex<float> interpVec = (weight.imag() * toVec) + (weight.real() * fromVec);
-    return std::atan2(std::imag(interpVec), std::real(interpVec)) * 2.0f;
+    float interpSin = (sinStart * weightStart) + (sinEnd * weightEnd);
+    float interpCos = (cosStart * weightStart) + (cosEnd * weightEnd);
+
+    double out = atan2(interpSin, interpCos);
+    return out + out;
 }

@@ -20,7 +20,7 @@ void PlayerObject::updateShipRotation(PlayerObject *this, float dt) {
     if (dt * 1.2 > (std::pow(diff.x, 2) + std::pow(diff.y, 2)) && (!m_isPlatformer || !m_isShip && !m_isBird))
         return;
 
-    float fromAngle = this->getRotation() * 0.017453; // pi/180
+    float fromAngle = this->getRotation() * 0.017453292f; // pi/180
     float toAngle = atan2(diff.y, diff.x);
     float interp = 0.07;
 

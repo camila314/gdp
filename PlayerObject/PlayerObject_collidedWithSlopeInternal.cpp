@@ -137,7 +137,7 @@ void PlayerObject::collidedWithSlopeInternal(float dt, GameObject* object, bool 
         if (upsideMod * playerPos.y >= upsideMod * newPlayerY) {
             collidedSlope = false;
             if (bool_h && upsideMod * playerPos.y < upsideMod * (newPlayerY + float_g)) {
-                collidedSlope = m_isBird ? upsideMod * this->m_yVelocity <= upsideMod * 0.0 : true;
+                collidedSlope = m_isBird ? upsideMod * this->m_yVelocity <= 0.0 : true;
             }
         }
 

@@ -365,8 +365,7 @@ void PlayerObject::updateJump(PlayerObject *this, float dt) {
                 this->setYVelocity(flipMod * yStart * v16, 2);
                 if (this->m_wasOnSlope || this->m_isOnSlope) {
                     slopeVelocity = this->m_slopeVelocity;
-                    if ((float)(slopeVelocity * (float)this->flipMod()) > 0.0 &&
-                            (!this->m_isPlatformer || fabs(this->m_platformerXVelocity) > 4.0)) {
+                    if ((float)(slopeVelocity * (float)this->flipMod()) > 0.0 && (!this->m_isPlatformer || fabs(this->m_platformerXVelocity) > 4.0)) {
                         velMult = this->m_yVelocity * 1.39999998;
                         ModifiedSlopeYVel = this->getModifiedSlopeYVel();
                         if (this->m_isBall)

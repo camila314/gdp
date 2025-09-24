@@ -21,12 +21,7 @@ void PlayerObject::checkSnapJumpToObject(GameObject* obj) {
                 bigStair = 60.0;
                 downStair = 120.0;
                 littleStair = 90.0;
-            } else if (m_vehicleSize == 1.0) {
-                threshold = 2.0;
-                bigStair = 135.0;
-                downStair = 225.0;
-                littleStair = 180.0;
-            } if (m_playerSpeed == 1.1) {
+            } else if (m_playerSpeed == 1.1) {
                 threshold = 2.0;
                 bigStair = 120.0;
                 downStair = 195.0;
@@ -37,10 +32,17 @@ void PlayerObject::checkSnapJumpToObject(GameObject* obj) {
                 downStair = 225.0;
                 littleStair = 90.0;
             } else {
-                threshold = 1.0;
-                bigStair = 90.0;
-                downStair = 150.0;
-                littleStair = 120.0;
+                if (m_vehicleSize == 1.0) {
+                    threshold = 2.0;
+                    bigStair = 135.0;
+                    downStair = 225.0;
+                    littleStair = 180.0;
+                } else {
+                    threshold = 1.0;
+                    bigStair = 90.0;
+                    downStair = 150.0;
+                    littleStair = 120.0;
+                }
             }
 
             float blockLength = this->flipMod() * 30.0f;
